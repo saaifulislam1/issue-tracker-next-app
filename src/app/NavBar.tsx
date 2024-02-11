@@ -1,9 +1,13 @@
-import { link } from "fs";
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { IoBugSharp } from "react-icons/io5";
 
 const NavBar = () => {
+  // gives us currentPath
+  const currentPath = usePathname();
+
   const links = [
     { label: "DashBoard", href: "/" },
     { label: "Issues", href: "/issues" },
@@ -18,7 +22,9 @@ const NavBar = () => {
           <Link
             key={link.href}
             href={link.href}
-            className="text-zinc-500 hover:text-zinc-800 transition-color"
+            className={`${
+              link.href === currentPath ? "text-zinc-900" : "text-zinc-500"
+            } hover:text-zinc-800 transition-color`}
           >
             {link.label}
           </Link>
