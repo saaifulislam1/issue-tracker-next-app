@@ -20,6 +20,16 @@ model Issue {
   updatedAt   DateTime @default(now())
 }
 
+model blog {
+  id Int @id @default(autoincrement())
+
+  title       String @db.VarChar(225)
+  description String @db.Text //long text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
 enum Status {
   OPEN
   IN_PROGRESS
