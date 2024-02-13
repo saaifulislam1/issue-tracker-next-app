@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 import { PrismaClient } from "@prisma/client";
-
+// this is where we are hitting: http://localhost:3000/api/issues
+// we are hitting into-> api/issues,
+// this is schema for data we will recieving
 const createIssueSchema = z.object({
   title: z.string().min(1).max(255),
   description: z.string().min(1),
 });
+// creating instance of Prisma
 const prisma = new PrismaClient();
+
+// Post function
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const validation = createIssueSchema.safeParse(body);
