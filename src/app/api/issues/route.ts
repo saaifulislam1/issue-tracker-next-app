@@ -7,10 +7,12 @@ const prisma = new PrismaClient();
 // Post function
 export async function POST(request: NextRequest) {
   const body = await request.json();
+  // sending the content to validate at createIssueSchema file
   const validation = createIssueSchema.safeParse(body);
   if (!validation.success) {
     return NextResponse.json(validation.error.errors, { status: 400 });
   }
+  // if everything is ok
   const newIssue = prisma.issue.create({
     data: { title: body.title, description: body.description },
   });
