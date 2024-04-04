@@ -1,9 +1,9 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-import { Button, Table, Link } from "@radix-ui/themes";
+import { Button, Table } from "@radix-ui/themes";
 import delay from "delay";
-
 import React from "react";
 import IssueAction from "./new/IssueAction";
+import Link from "../components/Link";
 
 const IssuePage = async () => {
   const prisma = new PrismaClient();
@@ -30,8 +30,7 @@ const IssuePage = async () => {
           {issues.map((issue) => (
             <Table.Row key={issue.id}>
               <Table.Cell>
-                <Link href={`/issues/${issue.id}`}> {issue.title}</Link>
-
+                <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
                 <div className="block md:hidden bg-red-600 rounded-md w-fit p-[2px] text-[11px]">
                   {issue.status}
                 </div>
