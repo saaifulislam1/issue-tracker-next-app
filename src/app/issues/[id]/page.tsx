@@ -1,4 +1,3 @@
-// "use client";
 import { PrismaClient } from "@prisma/client";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import delay from "delay";
@@ -31,7 +30,7 @@ const IssueDetailPage = async ({ params }: Props) => {
         </i>
         <p className="italic text-[10px]">{issue.createdAt.toDateString()}</p>
       </Flex>
-      <Card className="mt-3">
+      <Card className="mt-3 prose">
         <Markdown>{issue.description}</Markdown>
       </Card>
     </div>
