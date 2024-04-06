@@ -6,7 +6,6 @@ interface Props {
   IssueID: number;
 }
 const EditIssueButton = ({ IssueID }: Props) => {
-  console.log("id", IssueID);
   return (
     <Button>
       <IoPencilSharp />
