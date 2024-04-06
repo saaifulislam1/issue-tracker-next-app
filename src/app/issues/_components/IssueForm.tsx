@@ -1,7 +1,7 @@
 "use client";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
-import { createIssueSchema } from "@/app/validationSchema";
+import { issueSchema } from "@/app/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Issue } from "@prisma/client";
 import { Button, Callout, TextField } from "@radix-ui/themes";
@@ -13,7 +13,7 @@ import { Controller, useForm } from "react-hook-form";
 import SimpleMDE from "react-simplemde-editor";
 import { z } from "zod";
 
-type IssueFormData = z.infer<typeof createIssueSchema>;
+type IssueFormData = z.infer<typeof issueSchema>;
 interface Props {
   issue?: Issue;
 }
@@ -28,7 +28,7 @@ const IssueForm = ({ issue }: Props) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(issueSchema),
   });
 
   return (
@@ -43,7 +43,12 @@ const IssueForm = ({ issue }: Props) => {
         onSubmit={handleSubmit(async (data) => {
           try {
             setIsSubmitting(true);
-            await axios.post("/api/issues", data);
+            if (issue) {
+              await axios.patch("/api/issues/" + issue.id, data);
+            } else {
+              await axios.post("/api/issues", data);
+            }
+
             router.push("/issues");
           } catch (error) {
             setIsSubmitting(false);
@@ -74,7 +79,8 @@ const IssueForm = ({ issue }: Props) => {
         <ErrorMessage> {errors?.description?.message}</ErrorMessage>
 
         <Button className="cursor-pointer" disabled={isSubmitting}>
-          Submit New Issue{isSubmitting && <Spinner />}
+          {issue ? "Update issue" : "Submit New Issue"}{" "}
+          {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>
