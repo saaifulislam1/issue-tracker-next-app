@@ -12,10 +12,12 @@ export async function POST(request: NextRequest) {
   if (!validation.success) {
     return NextResponse.json(validation.error.errors, { status: 400 });
   }
+  console.log("ok till validation");
   // if everything is ok
   const newIssue = prisma.issue.create({
     data: { title: body.title, description: body.description },
   });
+  console.log((await newIssue).id);
 
   return NextResponse.json(newIssue, { status: 201 });
 }
