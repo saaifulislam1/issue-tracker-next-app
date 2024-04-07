@@ -1,5 +1,6 @@
 import { issueSchema } from "@/app/validationSchema";
 import { PrismaClient } from "@prisma/client";
+import delay from "delay";
 import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 export async function PATCH(
@@ -34,6 +35,7 @@ export async function DELETE(
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },
   });
+
   if (!issue) {
     return NextResponse.json({ error: "Invalid Request" }, { status: 400 });
   }
