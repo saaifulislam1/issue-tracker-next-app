@@ -15,7 +15,7 @@ const IssueDetails = ({ issue }: { issue: Issue }) => {
         </i>
         <p className="italic text-[10px]">{issue.createdAt.toDateString()}</p>
       </Flex>
-      <Card className="mt-3 prose">
+      <Card className="mt-3 prose max-w-full">
         <Markdown>{issue.description}</Markdown>
       </Card>
     </div>
