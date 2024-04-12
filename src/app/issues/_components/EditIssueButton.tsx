@@ -9,7 +9,7 @@ const EditIssueButton = ({ IssueID }: Props) => {
   return (
     <Button>
       <IoPencilSharp />
-      <Link href={`/issues/${IssueID}/edit`}> Edit Issue</Link>
+      <Link href={`/issues/edit//${IssueID}`}> Edit Issue</Link>
     </Button>
   );
 };
