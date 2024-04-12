@@ -4,9 +4,9 @@ import delay from "delay";
 import React from "react";
 import IssueAction from "./_components/IssueAction";
 import Link from "../components/Link";
+import prisma from "@/lib/prisma";
 
 const IssuePage = async () => {
-  const prisma = new PrismaClient();
   const issues = await prisma.issue.findMany();
   console.log(issues);
 
@@ -48,5 +48,6 @@ const IssuePage = async () => {
     </div>
   );
 };
+export const dynamic = "force-dynamic";
 
 export default IssuePage;
