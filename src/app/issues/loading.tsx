@@ -1,7 +1,7 @@
 import { Table } from "@radix-ui/themes";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import IssueAction from "./new/IssueAction";
+import IssueAction from "./_components/IssueAction";
 
 export default function loading() {
   const issues = [1, 2, 3, 4, 5];
