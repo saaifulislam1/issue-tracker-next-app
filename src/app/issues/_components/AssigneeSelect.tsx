@@ -3,7 +3,6 @@ import { User } from "@prisma/client";
 import { Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -14,8 +13,8 @@ const AssigneeSelect = () => {
     isLoading,
   } = useQuery<User[]>({
     queryKey: ["users"],
-    queryFn: () => axios.get("/xapi/users").then((res) => res.data),
-    staleTime: 60 * 1000, //helps in caching for 60s
+    queryFn: () => axios.get("/api/users").then((res) => res.data),
+    staleTime: 10 * 1000, //helps in caching for 60s
     retry: 3, //retry 3 time for fetching data
   });
   console.log(users);
