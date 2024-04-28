@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { toast } from "react-toastify";
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const {
@@ -27,9 +28,13 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     <Select.Root
       defaultValue={issue.assignedToUserId || "unassigned"}
       onValueChange={(userId) => {
-        axios.patch("/api/issues/" + issue.id, {
-          assignedToUserId: userId === "unassigned" ? null : userId,
-        });
+        axios
+          .patch("/api/issues/" + issue.id, {
+            assignedToUserId: userId === "unassigned" ? null : userId,
+          })
+          .catch(() => {
+            toast.error("Couldn't save the changes");
+          });
         //          "/api/issues/1, 2, 3, 4 anything" till this is the api endpoint
         //                  this the data we are sending along, more like payload
       }}
