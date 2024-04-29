@@ -8,18 +8,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { toast } from "react-toastify";
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
-  const {
-    data: users,
-    error,
-    isLoading,
-  } = useQuery<User[]>({
-    queryKey: ["users"],
-    queryFn: () => axios.get("/api/users").then((res) => res.data),
-    staleTime: 10 * 1000, //helps in caching for 60s
-    retry: 3, //retry 3 time for fetching data
-  });
-  console.log(users);
-
+  const { data: users, error, isLoading } = useUser();
   if (error) {
     return null;
   }
@@ -56,5 +45,12 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     </Select.Root>
   );
 };
+const useUser = () =>
+  useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () => axios.get("/api/users").then((res) => res.data),
+    staleTime: 10 * 1000, //helps in caching for 60s
+    retry: 3, //retry 3 time for fetching data
+  });
 
 export default AssigneeSelect;
