@@ -12,21 +12,23 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   if (error) {
     return null;
   }
+  const assignIssue = (userId: string) => {
+    axios
+      .patch("/api/issues/" + issue.id, {
+        assignedToUserId: userId === "unassigned" ? null : userId,
+      })
+      .catch(() => {
+        toast.error("Couldn't save the changes");
+      });
+    toast("Successfully assigned User");
+    //          "/api/issues/1, 2, 3, 4 anything" till this is the api endpoint
+    //                  this the data we are sending along, more like payload
+  };
 
   return (
     <Select.Root
       defaultValue={issue.assignedToUserId || "unassigned"}
-      onValueChange={(userId) => {
-        axios
-          .patch("/api/issues/" + issue.id, {
-            assignedToUserId: userId === "unassigned" ? null : userId,
-          })
-          .catch(() => {
-            toast.error("Couldn't save the changes");
-          });
-        //          "/api/issues/1, 2, 3, 4 anything" till this is the api endpoint
-        //                  this the data we are sending along, more like payload
-      }}
+      onValueChange={assignIssue}
     >
       <Select.Trigger placeholder="Assign..."></Select.Trigger>
       <Select.Content>
