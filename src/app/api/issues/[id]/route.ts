@@ -53,6 +53,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   const session = await getServerSession(authOptions);
+
   if (!session) {
     return NextResponse.json({}, { status: 401 });
   }

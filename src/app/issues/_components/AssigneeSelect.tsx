@@ -13,6 +13,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     return null;
   }
   const assignIssue = (userId: string) => {
+    console.log("amra korbo ud ", userId);
     axios
       .patch("/api/issues/" + issue.id, {
         assignedToUserId: userId === "unassigned" ? null : userId,

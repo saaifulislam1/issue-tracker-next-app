@@ -1,16 +1,19 @@
-import { Button } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import Link from "next/link";
 import React from "react";
-
-function IssueAction() {
+import IssueStatusFilter from "./IssueStatusFilter";
+type Props = { isMyIssue?: boolean };
+function IssueAction(props: Props) {
+  const { isMyIssue = false } = props;
   return (
-    <div>
+    <Flex mb={"5"} justify={"between"}>
+      <IssueStatusFilter isMyIssue />
       <Button>
         <Link href="/issues/new" className="text-white">
           New Issue
         </Link>
       </Button>
-    </div>
+    </Flex>
   );
 }
 

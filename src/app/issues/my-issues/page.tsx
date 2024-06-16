@@ -2,26 +2,34 @@ import { Prisma, PrismaClient, Status } from "@prisma/client";
 import { Button, Table } from "@radix-ui/themes";
 import delay from "delay";
 import React from "react";
-import IssueAction from "./_components/IssueAction";
-import Link from "../components/Link";
 import prisma from "@/lib/prisma";
+import IssueAction from "../_components/IssueAction";
+import Link from "@/app/components/Link";
+import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
+import authOptions from "@/app/auth/authOption";
 
-const IssuePage = async ({
+const MyIssuePage = async ({
   searchParams,
 }: {
   searchParams: { status: Status };
 }) => {
   const option: string = searchParams.status;
+  const session = await getServerSession(authOptions);
+  const serverUserEmail = session?.user?.email;
 
   const issues = await prisma.issue.findMany({
     where: {
       ...(option !== "ALL" && { status: searchParams.status }),
+      assignedToUser: {
+        email: serverUserEmail,
+      },
     },
   });
 
   return (
     <div>
-      <IssueAction />
+      <IssueAction isMyIssue />
       <Table.Root className="mt-2" variant="surface">
         <Table.Header>
           <Table.Row>
@@ -59,4 +67,4 @@ const IssuePage = async ({
 };
 export const dynamic = "force-dynamic";
 
-export default IssuePage;
+export default MyIssuePage;
