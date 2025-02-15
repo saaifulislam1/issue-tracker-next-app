@@ -21,7 +21,7 @@ const IssuePage = async ({
 
   return (
     <div>
-      <IssueAction />
+      {/* <IssueAction /> */}
       <Table.Root className="mt-2" variant="surface">
         <Table.Header>
           <Table.Row>
